@@ -1,0 +1,29 @@
+{
+    "port" : 8080,
+    "site-name" : "jMonkeyEngine - Store",
+    "site-hostname":"%%STORE_HOSTNAME%%",
+    "site-scheme":"https",
+    "email":"%%ROBOT_EMAIL%%",
+    "smtp-user":"%%ROBOT_EMAIL_USERNAME%%",
+    "smtp-password":"%%ROBOT_EMAIL_PASSWORD%%",
+    "smtp-port":%%ROBOT_SMTP_PORT%%,
+    "smtp-host":"%%ROBOT_SMTP_HOST%%",
+    "https-enabled" : false,
+    "database" : {
+      "type" : "mysql",
+      "address" : "mysql",
+      "port" : 3306,
+      "name" : "%%STORE_DB_NAME%%",
+      "username" : "%%STORE_DB_USER%%",
+      "password" : "%%STORE_DB_PASSWORD%%"
+    },
+    "security" : {
+      "pbkdfIterations" : 80000,
+      "passwordHashLength" : 512,
+      "saltHashLength" : 512
+    },
+    "website" : {
+      "registrationDisabled" : false,
+      "email-enabled" : true
+    }
+  }
