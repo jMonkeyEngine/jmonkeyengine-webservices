@@ -76,7 +76,7 @@ then
 fi
 
 # Mysql
-docker network create -d bridge --subnet 172.18.0.0/24 mysql_net 
+docker network create -d bridge --subnet 172.18.0.0/24 mysql_net    || true
 
 # Store
 docker-machine ssh $SERVER_NAME mkdir -p /srv/store_data/
@@ -95,7 +95,7 @@ docker-machine ssh $SERVER_NAME sed -i "s/%%STORE_DB_PASSWORD%%/$STORE_DB_PASSWO
 
 
 # NGINX
-docker network create -d bridge --subnet 172.18.1.0/24 nginx_gateway_net 
+docker network create -d bridge --subnet 172.18.1.0/24 nginx_gateway_net  || true
 
 ## Certs
 docker-machine ssh $SERVER_NAME mkdir -p /srv/certs
@@ -130,6 +130,7 @@ docker-machine ssh $SERVER_NAME sed -i "s/%%ROBOT_EMAIL%%/$ROBOT_EMAIL/g" /srv/h
 docker-machine ssh $SERVER_NAME sed -i "s/%%ROBOT_EMAIL_USERNAME%%/$ROBOT_EMAIL_USERNAME/g" /srv/hub_origin/app.yml
 docker-machine ssh $SERVER_NAME sed -i "s/%%ROBOT_EMAIL_PASSWORD%%/$ROBOT_EMAIL_PASSWORD/g" /srv/hub_origin/app.yml
 docker-machine ssh $SERVER_NAME sed -i "s/%%HUB_DEVELOPER_EMAILS%%/$HUB_DEVELOPER_EMAILS/g" /srv/hub_origin/app.yml
+docker-machine ssh $SERVER_NAME sed -i "s/%%ROBOT_SMTP_HOST%%/$ROBOT_SMTP_HOST/g" /srv/hub_origin/app.yml
 
 
 if [ "$INSTALL" = "" ];
@@ -141,10 +142,11 @@ if [ "$INSTALL" = "all" ];
 then
     docker-machine ssh $SERVER_NAME "SKIP_CERTS=$SKIP_CERTS /installers/updater.sh"
 else
-    if [ ! -f "/init/installers/$INSTALL.sh" ];
+    if [ ! -f "init/installers/$INSTALL.sh" ];
     then
         echo "Error, can't install $INSTALL. Service not found in init/installers"
     else
+        echo "Install $INSTALL"
         docker-machine ssh $SERVER_NAME "SKIP_CERTS=$SKIP_CERTS /installers/$INSTALL.sh"
     fi
 fi
