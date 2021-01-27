@@ -14,10 +14,10 @@ do
 done
 
 echo "Remove unused volumes"
-docker volume prune --filter "label!=keep" -f
+yes|docker volume prune --filter "label!=keep" -f
 
 echo "Remove unused images"
-docker image prune -a -f 
+yes|docker image prune -a -f 
 
 echo "Clean OS"
 journalctl --vacuum-time=10d --vacuum-size=50M

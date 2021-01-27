@@ -45,5 +45,7 @@ fi
 yes | ./launcher cleanup
 /cleanup.sh
 
+docker update --restart=always app
+
 docker network connect --alias app.docker nginx_gateway_net app  
 docker network disconnect bridge app || true

@@ -6,4 +6,5 @@ cd /installers
 ./store.sh
 ./nginx.sh
 ./healthcollector-inst.sh
+./keeweb.sh
 echo "Everything is installed!"

@@ -5,6 +5,10 @@ source /config.sh
 # Phpmyadmin guard password
 htpasswd -b -c /srv/nginx_gateway/.pma "${PMA_HTTP_USER}" "${PMA_HTTP_PASSWORD}"
 
+
+# Keeweb guard password
+htpasswd -b -c /srv/nginx_gateway/.keeweb "${KEEWEB_HTTP_USER}" "${KEEWEB_HTTP_PASSWORD}"
+
 #Certbot
 docker stop certbot || true
 docker rm certbot || true
@@ -47,7 +51,7 @@ if [ "$SKIP_CERTS" != "1" ];
 then
     sleep 10
     docker start certbot
-    docker exec -e "DOMAINS=${SSL_ROOT},${HUB_HOSTNAME},${STORE_HOSTNAME},${PMA_HOSTNAME}"  certbot sh /run.sh new
+    docker exec -e "DOMAINS=${SSL_ROOT},${HUB_HOSTNAME},${STORE_HOSTNAME},${PMA_HOSTNAME},${KEEWEB_HOSTNAME}"  certbot sh /run.sh new
     docker stop certbot
 fi
 docker restart nginx_gateway

@@ -61,3 +61,8 @@ export HUB_DEVELOPER_EMAILS=""
 
 # Load testing 
 export LOADER_IO_VERIFICATION_TOKEN="loaderio-12c626c34599fecb2180d30f2694fb33"
+
+#KEEWEB
+export KEEWEB_HOSTNAME="vault.jmonkeyengine.org"
+export KEEWEB_HTTP_USER=""
+export KEEWEB_HTTP_PASSWORD=""

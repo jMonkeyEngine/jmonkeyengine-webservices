@@ -119,6 +119,7 @@ docker-machine ssh $SERVER_NAME sed -i "s/%%PMA_HOSTNAME%%/$PMA_HOSTNAME/g" /srv
 docker-machine ssh $SERVER_NAME sed -i "s/%%HUB_HOSTNAME%%/$HUB_HOSTNAME/g" /srv/nginx_gateway/nginx.conf
 docker-machine ssh $SERVER_NAME sed -i "s+%%JME_HISTORIC_ARCHIVE%%+$JME_HISTORIC_ARCHIVE+g" /srv/nginx_gateway/nginx.conf
 docker-machine ssh $SERVER_NAME sed -i "s+%%LOADER_IO_VERIFICATION_TOKEN%%+$LOADER_IO_VERIFICATION_TOKEN+g" /srv/nginx_gateway/nginx.conf
+docker-machine ssh $SERVER_NAME sed -i "s+%%KEEWEB_HOSTNAME%%+$KEEWEB_HOSTNAME+g" /srv/nginx_gateway/nginx.conf
 
 # Discourse
 docker-machine ssh $SERVER_NAME mkdir -p /srv/hub_origin
@@ -131,6 +132,12 @@ docker-machine ssh $SERVER_NAME sed -i "s/%%ROBOT_EMAIL_USERNAME%%/$ROBOT_EMAIL_
 docker-machine ssh $SERVER_NAME sed -i "s/%%ROBOT_EMAIL_PASSWORD%%/$ROBOT_EMAIL_PASSWORD/g" /srv/hub_origin/app.yml
 docker-machine ssh $SERVER_NAME sed -i "s/%%HUB_DEVELOPER_EMAILS%%/$HUB_DEVELOPER_EMAILS/g" /srv/hub_origin/app.yml
 docker-machine ssh $SERVER_NAME sed -i "s/%%ROBOT_SMTP_HOST%%/$ROBOT_SMTP_HOST/g" /srv/hub_origin/app.yml
+
+
+# Keeweb
+docker-machine ssh $SERVER_NAME mkdir -p /srv/keeweb/config
+docker-machine scp -r config/keeweb/config/*  $SERVER_NAME:/srv/keeweb/config
+docker-machine ssh $SERVER_NAME sed -i "s/%%KEEWEB_GAPI_CLIENT_ID%%/$KEEWEB_GAPI_CLIENT_ID/g" /srv/keeweb/config/config.json
 
 
 if [ "$INSTALL" = "" ];
@@ -150,3 +157,5 @@ else
         docker-machine ssh $SERVER_NAME "SKIP_CERTS=$SKIP_CERTS /installers/$INSTALL.sh"
     fi
 fi
+
+
