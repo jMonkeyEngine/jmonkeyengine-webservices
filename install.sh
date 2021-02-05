@@ -120,6 +120,8 @@ docker-machine ssh $SERVER_NAME sed -i "s/%%HUB_HOSTNAME%%/$HUB_HOSTNAME/g" /srv
 docker-machine ssh $SERVER_NAME sed -i "s+%%JME_HISTORIC_ARCHIVE%%+$JME_HISTORIC_ARCHIVE+g" /srv/nginx_gateway/nginx.conf
 docker-machine ssh $SERVER_NAME sed -i "s+%%LOADER_IO_VERIFICATION_TOKEN%%+$LOADER_IO_VERIFICATION_TOKEN+g" /srv/nginx_gateway/nginx.conf
 docker-machine ssh $SERVER_NAME sed -i "s+%%KEEWEB_HOSTNAME%%+$KEEWEB_HOSTNAME+g" /srv/nginx_gateway/nginx.conf
+docker-machine ssh $SERVER_NAME sed -i "s+%%OBJECT_STORAGE_HOSTNAME%%+$OBJECT_STORAGE_HOSTNAME+g" /srv/nginx_gateway/nginx.conf
+docker-machine ssh $SERVER_NAME sed -i "s+%%ARTIFACTS_HOSTNAME%%+$ARTIFACTS_HOSTNAME+g" /srv/nginx_gateway/nginx.conf
 
 # Discourse
 docker-machine ssh $SERVER_NAME mkdir -p /srv/hub_origin

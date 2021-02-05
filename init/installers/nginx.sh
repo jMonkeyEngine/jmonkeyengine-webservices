@@ -51,7 +51,7 @@ if [ "$SKIP_CERTS" != "1" ];
 then
     sleep 10
     docker start certbot
-    docker exec -e "DOMAINS=${SSL_ROOT},${HUB_HOSTNAME},${STORE_HOSTNAME},${PMA_HOSTNAME},${KEEWEB_HOSTNAME}"  certbot sh /run.sh new
+    docker exec -e "DOMAINS=${SSL_ROOT},${HUB_HOSTNAME},${STORE_HOSTNAME},${PMA_HOSTNAME},${KEEWEB_HOSTNAME},${OBJECT_STORAGE_HOSTNAME},${ARTIFACTS_HOSTNAME}"  certbot sh /run.sh new
     docker stop certbot
 fi
 docker restart nginx_gateway

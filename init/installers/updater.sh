@@ -7,4 +7,5 @@ cd /installers
 ./nginx.sh
 ./healthcollector-inst.sh
 ./keeweb.sh
+./minio.sh
 echo "Everything is installed!"

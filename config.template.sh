@@ -66,3 +66,9 @@ export LOADER_IO_VERIFICATION_TOKEN="loaderio-12c626c34599fecb2180d30f2694fb33"
 export KEEWEB_HOSTNAME="vault.jmonkeyengine.org"
 export KEEWEB_HTTP_USER=""
 export KEEWEB_HTTP_PASSWORD=""
+
+#MINIO
+export OBJECT_STORAGE_HOSTNAME="objects.jmonkeyengine.org"
+export ARTIFACTS_HOSTNAME="artifacts.jmonkeyengine.org"
+export MINIO_MASTER_USERNAME="jmonkeyengine"
+export MINIO_MASTER_PASSWORD=""
