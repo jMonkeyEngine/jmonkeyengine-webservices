@@ -102,6 +102,27 @@ If needed you can trigger a backup manually with:
 - `./backup-remote.sh` : For a full backup
 - `./backup-remote.sh incremental` : For an incremental backup
 
+
+## Setup GOOGLE DRIVE backup (secondary backup)
+
+This is a secondary encrypted backup location shared with the core team.
+
+### Initial Setup:
+
+Create a GDRIVE rclone config locally ( https://rclone.org/drive/ )
+
+`cat ~/.config/rclone/rclone.conf `
+
+take note of client_id, client_secret, token, root_folder_id 
+
+and add them to the config.sh
+```
+export GDRIVE_BACKUP_FOLDER_ID=""
+export GDRIVE_BACKUP_TOKEN = ''
+export GDRIVE_BACKUP_CLIENT_ID = ''
+export GDRIVE_BACKUP_CLIENT_SECRET = ''
+```
+
 ## Cheatsheet
 ### How to grant yourself the admin role  in discourse
 1. cd  /srv/hub/

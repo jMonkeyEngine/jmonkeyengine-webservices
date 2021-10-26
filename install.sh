@@ -74,6 +74,7 @@ if [ "$RESTORE" = "1" ];
 then
     docker-machine ssh $SERVER_NAME /restore.sh
 fi
+sleep 60
 
 # Mysql
 docker network create -d bridge --subnet 172.18.0.0/24 mysql_net    || true
@@ -82,16 +83,17 @@ docker network create -d bridge --subnet 172.18.0.0/24 mysql_net    || true
 docker-machine ssh $SERVER_NAME mkdir -p /srv/store_data/
 docker-machine ssh $SERVER_NAME mkdir -p /srv/store_data/config
 docker-machine scp -r config/store/server-config.json  $SERVER_NAME:/srv/store_data/config/server-config.json
-docker-machine ssh $SERVER_NAME sed -i "s/%%ROBOT_EMAIL%%/$ROBOT_EMAIL/g" /srv/store_data/config/server-config.json
-docker-machine ssh $SERVER_NAME sed -i "s/%%ROBOT_EMAIL_USERNAME%%/$ROBOT_EMAIL_USERNAME/g" /srv/store_data/config/server-config.json
-docker-machine ssh $SERVER_NAME sed -i "s/%%ROBOT_EMAIL_PASSWORD%%/$ROBOT_EMAIL_PASSWORD/g" /srv/store_data/config/server-config.json
-docker-machine ssh $SERVER_NAME sed -i "s/%%TEAM_EMAIL_DEST%%/$TEAM_EMAIL_DEST/g" /srv/store_data/config/server-config.json
-docker-machine ssh $SERVER_NAME sed -i "s/%%ROBOT_SMTP_PORT%%/$ROBOT_SMTP_PORT/g" /srv/store_data/config/server-config.json
-docker-machine ssh $SERVER_NAME sed -i "s/%%ROBOT_SMTP_HOST%%/$ROBOT_SMTP_HOST/g" /srv/store_data/config/server-config.json
-docker-machine ssh $SERVER_NAME sed -i "s/%%STORE_HOSTNAME%%/$STORE_HOSTNAME/g" /srv/store_data/config/server-config.json
-docker-machine ssh $SERVER_NAME sed -i "s/%%STORE_DB_USER%%/$STORE_DB_USER/g" /srv/store_data/config/server-config.json
-docker-machine ssh $SERVER_NAME sed -i "s/%%STORE_DB_NAME%%/$STORE_DB_NAME/g" /srv/store_data/config/server-config.json
-docker-machine ssh $SERVER_NAME sed -i "s/%%STORE_DB_PASSWORD%%/$STORE_DB_PASSWORD/g" /srv/store_data/config/server-config.json
+docker-machine ssh $SERVER_NAME replace "%%ROBOT_EMAIL%%" "$ROBOT_EMAIL" /srv/store_data/config/server-config.json
+docker-machine ssh $SERVER_NAME replace "%%ROBOT_EMAIL_USERNAME%%" "$ROBOT_EMAIL_USERNAME" /srv/store_data/config/server-config.json
+# docker-machine ssh $SERVER_NAME sed -i "s/%%ROBOT_EMAIL_PASSWORD%%/$ROBOT_EMAIL_PASSWORD/g" /srv/store_data/config/server-config.json
+docker-machine ssh $SERVER_NAME replace "%%ROBOT_EMAIL_PASSWORD%%" "$ROBOT_EMAIL_PASSWORD" /srv/store_data/config/server-config.json
+docker-machine ssh $SERVER_NAME replace "%%TEAM_EMAIL_DEST%%" "$TEAM_EMAIL_DEST" /srv/store_data/config/server-config.json
+docker-machine ssh $SERVER_NAME replace "%%ROBOT_SMTP_PORT%%" "$ROBOT_SMTP_PORT" /srv/store_data/config/server-config.json
+docker-machine ssh $SERVER_NAME replace "%%ROBOT_SMTP_HOST%%" "$ROBOT_SMTP_HOST" /srv/store_data/config/server-config.json
+docker-machine ssh $SERVER_NAME replace "%%STORE_HOSTNAME%%" "$STORE_HOSTNAME" /srv/store_data/config/server-config.json
+docker-machine ssh $SERVER_NAME replace "%%STORE_DB_USER%%" "$STORE_DB_USER" /srv/store_data/config/server-config.json
+docker-machine ssh $SERVER_NAME replace "%%STORE_DB_NAME%%" "$STORE_DB_NAME" /srv/store_data/config/server-config.json
+docker-machine ssh $SERVER_NAME replace "%%STORE_DB_PASSWORD%%" "$STORE_DB_PASSWORD" /srv/store_data/config/server-config.json
 
 
 # NGINX
@@ -114,32 +116,36 @@ docker-machine ssh $SERVER_NAME chown 1000:1000 /srv/certs_fake -Rf
 docker-machine ssh $SERVER_NAME mkdir -p /srv/www
 docker-machine scp -r www  $SERVER_NAME:/srv/
 docker-machine scp -r config/nginx_gateway  $SERVER_NAME:/srv/
-docker-machine ssh $SERVER_NAME sed -i "s/%%STORE_HOSTNAME%%/$STORE_HOSTNAME/g" /srv/nginx_gateway/nginx.conf
-docker-machine ssh $SERVER_NAME sed -i "s/%%PMA_HOSTNAME%%/$PMA_HOSTNAME/g" /srv/nginx_gateway/nginx.conf
-docker-machine ssh $SERVER_NAME sed -i "s/%%HUB_HOSTNAME%%/$HUB_HOSTNAME/g" /srv/nginx_gateway/nginx.conf
-docker-machine ssh $SERVER_NAME sed -i "s+%%JME_HISTORIC_ARCHIVE%%+$JME_HISTORIC_ARCHIVE+g" /srv/nginx_gateway/nginx.conf
-docker-machine ssh $SERVER_NAME sed -i "s+%%LOADER_IO_VERIFICATION_TOKEN%%+$LOADER_IO_VERIFICATION_TOKEN+g" /srv/nginx_gateway/nginx.conf
-docker-machine ssh $SERVER_NAME sed -i "s+%%KEEWEB_HOSTNAME%%+$KEEWEB_HOSTNAME+g" /srv/nginx_gateway/nginx.conf
-docker-machine ssh $SERVER_NAME sed -i "s+%%OBJECT_STORAGE_HOSTNAME%%+$OBJECT_STORAGE_HOSTNAME+g" /srv/nginx_gateway/nginx.conf
-docker-machine ssh $SERVER_NAME sed -i "s+%%ARTIFACTS_HOSTNAME%%+$ARTIFACTS_HOSTNAME+g" /srv/nginx_gateway/nginx.conf
+docker-machine ssh $SERVER_NAME replace "%%STORE_HOSTNAME%%" "$STORE_HOSTNAME" /srv/nginx_gateway/nginx.conf
+docker-machine ssh $SERVER_NAME replace "%%PMA_HOSTNAME%%" "$PMA_HOSTNAME" /srv/nginx_gateway/nginx.conf
+docker-machine ssh $SERVER_NAME replace "%%HUB_HOSTNAME%%" "$HUB_HOSTNAME" /srv/nginx_gateway/nginx.conf
+docker-machine ssh $SERVER_NAME replace "%%JME_HISTORIC_ARCHIVE%%" "$JME_HISTORIC_ARCHIVE" /srv/nginx_gateway/nginx.conf
+docker-machine ssh $SERVER_NAME replace "%%LOADER_IO_VERIFICATION_TOKEN%%" "$LOADER_IO_VERIFICATION_TOKEN" /srv/nginx_gateway/nginx.conf
+docker-machine ssh $SERVER_NAME replace "%%KEEWEB_HOSTNAME%%" "$KEEWEB_HOSTNAME" /srv/nginx_gateway/nginx.conf
+docker-machine ssh $SERVER_NAME replace "%%OBJECT_STORAGE_HOSTNAME%%" "$OBJECT_STORAGE_HOSTNAME" /srv/nginx_gateway/nginx.conf
+docker-machine ssh $SERVER_NAME replace "%%ARTIFACTS_HOSTNAME%%" "$ARTIFACTS_HOSTNAME" /srv/nginx_gateway/nginx.conf
+docker-machine ssh $SERVER_NAME replace "%%KEEWEB_WEB_DAV_HOSTNAME%%" "$KEEWEB_WEB_DAV_HOSTNAME"  /srv/nginx_gateway/nginx.conf
 
 # Discourse
 docker-machine ssh $SERVER_NAME mkdir -p /srv/hub_origin
 docker-machine scp -r config/hub/app.yml  $SERVER_NAME:/srv/hub_origin/app.yml
-docker-machine ssh $SERVER_NAME sed -i "s/%%HUB_HOSTNAME%%/$HUB_HOSTNAME/g" /srv/hub_origin/app.yml
-docker-machine ssh $SERVER_NAME sed -i "s/%%TEAM_EMAIL_DEST%%/$TEAM_EMAIL_DEST/g" /srv/hub_origin/app.yml
-docker-machine ssh $SERVER_NAME sed -i "s/%%ROBOT_SMTP_PORT%%/$ROBOT_SMTP_PORT/g" /srv/hub_origin/app.yml
-docker-machine ssh $SERVER_NAME sed -i "s/%%ROBOT_EMAIL%%/$ROBOT_EMAIL/g" /srv/hub_origin/app.yml
-docker-machine ssh $SERVER_NAME sed -i "s/%%ROBOT_EMAIL_USERNAME%%/$ROBOT_EMAIL_USERNAME/g" /srv/hub_origin/app.yml
-docker-machine ssh $SERVER_NAME sed -i "s/%%ROBOT_EMAIL_PASSWORD%%/$ROBOT_EMAIL_PASSWORD/g" /srv/hub_origin/app.yml
-docker-machine ssh $SERVER_NAME sed -i "s/%%HUB_DEVELOPER_EMAILS%%/$HUB_DEVELOPER_EMAILS/g" /srv/hub_origin/app.yml
-docker-machine ssh $SERVER_NAME sed -i "s/%%ROBOT_SMTP_HOST%%/$ROBOT_SMTP_HOST/g" /srv/hub_origin/app.yml
+docker-machine ssh $SERVER_NAME replace  "%%HUB_HOSTNAME%%" "$HUB_HOSTNAME" /srv/hub_origin/app.yml
+docker-machine ssh $SERVER_NAME replace  "%%TEAM_EMAIL_DEST%%" "$TEAM_EMAIL_DEST" /srv/hub_origin/app.yml
+docker-machine ssh $SERVER_NAME replace  "%%ROBOT_SMTP_PORT%%" "$ROBOT_SMTP_PORT" /srv/hub_origin/app.yml
+docker-machine ssh $SERVER_NAME replace  "%%ROBOT_EMAIL%%" "$ROBOT_EMAIL" /srv/hub_origin/app.yml
+docker-machine ssh $SERVER_NAME replace  "%%ROBOT_EMAIL_USERNAME%%" "$ROBOT_EMAIL_USERNAME" /srv/hub_origin/app.yml
+docker-machine ssh $SERVER_NAME replace "%%ROBOT_EMAIL_PASSWORD%%" "$ROBOT_EMAIL_PASSWORD" /srv/hub_origin/app.yml
+docker-machine ssh $SERVER_NAME replace  "%%HUB_DEVELOPER_EMAILS%%" "$HUB_DEVELOPER_EMAILS" /srv/hub_origin/app.yml
+docker-machine ssh $SERVER_NAME replace  "%%ROBOT_SMTP_HOST%%" "$ROBOT_SMTP_HOST" /srv/hub_origin/app.yml
 
 
 # Keeweb
 docker-machine ssh $SERVER_NAME mkdir -p /srv/keeweb/config
 docker-machine scp -r config/keeweb/config/*  $SERVER_NAME:/srv/keeweb/config
-docker-machine ssh $SERVER_NAME sed -i "s/%%KEEWEB_GAPI_CLIENT_ID%%/$KEEWEB_GAPI_CLIENT_ID/g" /srv/keeweb/config/config.json
+docker-machine ssh $SERVER_NAME replace "%%KEEWEB_GAPI_CLIENT_ID%%" "$KEEWEB_GAPI_CLIENT_ID" /srv/keeweb/config/config.json
+docker-machine ssh $SERVER_NAME replace "%%KEEWEB_WEB_DAV_HOSTNAME%%" "$KEEWEB_WEB_DAV_HOSTNAME" /srv/keeweb/config/config.json
+docker-machine ssh $SERVER_NAME replace "%%KEEWEB_HTTP_USER%%" "$KEEWEB_HTTP_USER" /srv/keeweb/config/config.json
+docker-machine ssh $SERVER_NAME replace "%%KEEWEB_HTTP_PASSWORD%%" "$KEEWEB_HTTP_PASSWORD" /srv/keeweb/config/config.json
 
 
 if [ "$INSTALL" = "" ];

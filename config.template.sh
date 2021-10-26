@@ -14,8 +14,7 @@ export SERVER_NAME="jmonkeyengine"
 #   meaning this value can change accross instalations without problems.
 #   It is also possible to arbitrarily move files served from $HUB_HOSTNAME/uploads/default 
 #   into $JME_HISTORIC_ARCHIVE/uploads/default  and they will be served as expected.
-#   Note: escaped for sed
-export JME_HISTORIC_ARCHIVE='https\://jme\-historic\.frk\.wf'
+export JME_HISTORIC_ARCHIVE='https://jme-historic.frk.wf'
 
 # Backups config (glacier)
 export AWS_ACCESS_KEY_ID="AAAAAAAAAAAa"
@@ -64,11 +63,25 @@ export LOADER_IO_VERIFICATION_TOKEN="loaderio-12c626c34599fecb2180d30f2694fb33"
 
 #KEEWEB
 export KEEWEB_HOSTNAME="vault.jmonkeyengine.org"
-export KEEWEB_HTTP_USER=""
+export KEEWEB_WEB_DAV_HOSTNAME="webdav.vault.jmonkeyengine.org"
+export KEEWEB_GAPI_CLIENT_ID=""
+export KEEWEB_HTTP_USER="user"
 export KEEWEB_HTTP_PASSWORD=""
+export KEEWEB_SECRETS_GDRIVE_FOLDER_ID=""
+export KEEWEB_SECRETS_GDRIVE_CLIENT_ID=''
+export KEEWEB_SECRETS_GDRIVE_SECRET=''
+export KEEWEB_SECRETS_GDRIVE_TOKEN=''
 
 #MINIO
 export OBJECT_STORAGE_HOSTNAME="objects.jmonkeyengine.org"
+export OBJECT_STORAGE_CONSOLE_HOSTNAME="console.objects.jmonkeyengine.org"
 export ARTIFACTS_HOSTNAME="artifacts.jmonkeyengine.org"
 export MINIO_MASTER_USERNAME="jmonkeyengine"
 export MINIO_MASTER_PASSWORD=""
+
+# GDRIVE BACKUP
+export GDRIVE_BACKUP_PASSWORD=""
+export GDRIVE_BACKUP_FOLDER_ID=""
+export GDRIVE_BACKUP_TOKEN = ''
+export GDRIVE_BACKUP_CLIENT_ID = ''
+export GDRIVE_BACKUP_CLIENT_SECRET = ''

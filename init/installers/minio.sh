@@ -20,7 +20,7 @@ docker run  --restart=always   -d  --name minio \
   --read-only \
   --tmpfs  /tmp:uid=1000,gid=1000 \
   --health-cmd="curl -f http://localhost:9000/minio/health/live || exit 1" \
-  minio/minio server  /data
+  minio/minio server  /data --console-address "9001"
 
 docker network connect --alias minio.docker nginx_gateway_net minio  
 docker network disconnect bridge minio

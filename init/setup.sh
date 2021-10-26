@@ -103,6 +103,18 @@ fi
 
 
 
+# Simple replace
+echo '#!/usr/bin/env python3'> /bin/replace
+echo "import sys
+with open(sys.argv[3], encoding='utf-8',mode='r') as f:
+  tr=f.read().replace(sys.argv[1],sys.argv[2])
+  with open(sys.argv[3], encoding='utf-8',mode='w') as f2:  
+    f2.write(tr)
+" >> /bin/replace
+chmod +x /bin/replace
+
+
+
 # Backups
 mkdir -p /backups
 
@@ -118,6 +130,12 @@ pip3 install -r requirements.txt
 python3 setup.py install
 cd "$cdir"
 
+# Install rclone
+apt install -y rclone
+
 ## Configure backup update cleanup cron
-(crontab -l ; echo "00 1 1 * * (/backup.sh&&/installers/updater.sh&&/cleanup.sh) >> /var/log/robot.log") | sort - | uniq - | crontab -
+(crontab -l ; echo "00 1 1 * * (/backup.sh&&/installers/updater.sh&&/cleanup.sh&&reboot) >> /var/log/robot.log") | sort - | uniq - | crontab -
 (crontab -l ; echo "00 7 * * 7 (/backup.sh incremental) >> /var/log/robot.log") | sort - | uniq - | crontab -
+
+chmod +x /gdrive-backup.sh
+(crontab -l ; echo "00 1 2 * * (/gdrive-backup.sh&&/cleanup.sh) >> /var/log/robot.log") | sort - | uniq - | crontab -

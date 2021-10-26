@@ -32,9 +32,11 @@ cp -Rf /srv/certs_fake/* /srv/certs/
 chown 1000:1000 /srv/certs -Rf
 chown 1000:1000 /srv/certs_fake -Rf
 
-
+mkdir -p /srv/keeweb/db/data
+chown 1000:1000 -Rf /srv/keeweb/db/data
 docker run   --name=nginx_gateway -v /srv/certs:/etc/nginx/certs:ro \
         -v /srv/nginx_gateway:/etc/nginx:ro  \
+        -v  /srv/keeweb/db/data:/keeweb \
         -v  /srv/hub/shared/standalone/nginx.http.sock:/var/run/hub.sock \
         --health-cmd="(curl  -sS  http://127.0.0.1:80/health|grep UP) || exit 1" \
         -p 80:80 -p 443:443  --restart=always \
@@ -51,7 +53,7 @@ if [ "$SKIP_CERTS" != "1" ];
 then
     sleep 10
     docker start certbot
-    docker exec -e "DOMAINS=${SSL_ROOT},${HUB_HOSTNAME},${STORE_HOSTNAME},${PMA_HOSTNAME},${KEEWEB_HOSTNAME},${OBJECT_STORAGE_HOSTNAME},${ARTIFACTS_HOSTNAME}"  certbot sh /run.sh new
+    docker exec -e "DOMAINS=${SSL_ROOT},${HUB_HOSTNAME},${STORE_HOSTNAME},${PMA_HOSTNAME},${KEEWEB_HOSTNAME},${OBJECT_STORAGE_HOSTNAME},${ARTIFACTS_HOSTNAME},${KEEWEB_WEB_DAV_HOSTNAME},${OBJECT_STORAGE_CONSOLE_HOSTNAME}"  certbot sh /run.sh new
     docker stop certbot
 fi
 docker restart nginx_gateway
