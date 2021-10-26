@@ -55,13 +55,12 @@ team_drive =
 [gdrive-backup-enc]
 type = crypt
 remote = gdrive-backup:/enc
-password = `rclone obscure ${GDRIVE_BACKUP_PASSWORD}`" > ~/.config/rclone/backup-rclone.conf 
+password = `rclone obscure ${GDRIVE_BACKUP_PASSWORD}`" >  "$HOME/.config/rclone/rclone.conf"
 
 
 
 #######
-rclone --config="$HOME/.config/rclone/secrets-rclone.conf" -P sync /srv gdrive-backup-enc:/jmonkeyengine/backup/srv
-rclone --config="$HOME/.config/rclone/secrets-rclone.conf" -P sync /backups gdrive-backup-enc:/jmonkeyengine/backup/backups
+rclone  -P sync /srv gdrive-backup-enc:/jmonkeyengine/backup/srv
+rclone  -P sync /backups gdrive-backup-enc:/jmonkeyengine/backup/backups
 #######
-
 /cleanup.sh
