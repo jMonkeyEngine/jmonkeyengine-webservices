@@ -123,6 +123,7 @@ docker-machine ssh $SERVER_NAME replace "%%JME_HISTORIC_ARCHIVE%%" "$JME_HISTORI
 docker-machine ssh $SERVER_NAME replace "%%LOADER_IO_VERIFICATION_TOKEN%%" "$LOADER_IO_VERIFICATION_TOKEN" /srv/nginx_gateway/nginx.conf
 docker-machine ssh $SERVER_NAME replace "%%KEEWEB_HOSTNAME%%" "$KEEWEB_HOSTNAME" /srv/nginx_gateway/nginx.conf
 docker-machine ssh $SERVER_NAME replace "%%OBJECT_STORAGE_HOSTNAME%%" "$OBJECT_STORAGE_HOSTNAME" /srv/nginx_gateway/nginx.conf
+docker-machine ssh $SERVER_NAME replace "%%OBJECT_STORAGE_CONSOLE_HOSTNAME%%" "$OBJECT_STORAGE_CONSOLE_HOSTNAME" /srv/nginx_gateway/nginx.conf
 docker-machine ssh $SERVER_NAME replace "%%ARTIFACTS_HOSTNAME%%" "$ARTIFACTS_HOSTNAME" /srv/nginx_gateway/nginx.conf
 docker-machine ssh $SERVER_NAME replace "%%KEEWEB_WEB_DAV_HOSTNAME%%" "$KEEWEB_WEB_DAV_HOSTNAME"  /srv/nginx_gateway/nginx.conf
 
