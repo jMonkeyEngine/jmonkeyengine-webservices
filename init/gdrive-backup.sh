@@ -60,9 +60,10 @@ password = `rclone obscure ${GDRIVE_BACKUP_PASSWORD}`" >  "$HOME/.config/rclone/
 
 
 #######
-rclone delete gdrive-backup-enc:/jmonkeyengine/backup/srv
-rclone  -P sync /srv gdrive-backup-enc:/jmonkeyengine/backup/srv
-rclone delete gdrive-backup-enc:/jmonkeyengine/backup/backups
+# rclone delete gdrive-backup-enc:/jmonkeyengine/backup/srv
+#rclone delete gdrive-backup-enc:/jmonkeyengine/backup/backups
+
+rclone  -P sync /srv gdrive-backup-enc:/jmonkeyengine/backup/srv --ignore-size --ignore-checksum --exclude="hub/**" --exclude  "mysql_data/**"
 rclone  -P sync /backups gdrive-backup-enc:/jmonkeyengine/backup/backups
 #######
 /cleanup.sh
