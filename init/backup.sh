@@ -33,7 +33,7 @@ sync
 export SOURCE1="/srv"
 export SOURCE2="/backups"
 export KEEP_BACKUP_TIME1="4M"
-export KEEP_BACKUP_TIME2="1M"
+export KEEP_BACKUP_TIME2="2M"
 
 # backup
 echo "Perform backup"
@@ -49,7 +49,7 @@ echo "Backup type $type"
 
 
 echo "Removing expired backups of $SOURCE1 "
-/usr/local/bin/duplicity remove-older-than ${KEEP_BACKUP_TIME1} ${AWS_BUCKET1}
+#/usr/local/bin/duplicity remove-older-than ${KEEP_BACKUP_TIME1} ${AWS_BUCKET1} --force
 
 echo "Creating backup for $SOURCE1 of type $type"
 /usr/local/bin/duplicity $type \
@@ -62,7 +62,7 @@ ${SOURCE1}/ ${AWS_BUCKET1}
 
 
 echo "Removing expired backups for $SOURCE2"
-/usr/local/bin/duplicity remove-older-than ${KEEP_BACKUP_TIME2} ${AWS_BUCKET2}
+/usr/local/bin/duplicity remove-older-than ${KEEP_BACKUP_TIME2} ${AWS_BUCKET2} --force
 echo "Creating backup of $SOURCE2 of type full"
 /usr/local/bin/duplicity full \
 --no-encryption \
