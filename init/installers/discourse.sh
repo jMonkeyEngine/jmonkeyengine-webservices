@@ -12,10 +12,13 @@ then
 fi
 cp -f /srv/hub_origin/app.yml /srv/hub/containers/app.yml
 
+/cleanup.sh
+
 echo "Update hub!"
 cd  /srv/hub/
 git pull
 ./launcher rebuild app
+/cleanup.sh
 ./launcher rebuild app # Sometimes you need to do this twice... 
 
 yes | ./launcher cleanup

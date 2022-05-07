@@ -126,6 +126,8 @@ docker-machine ssh $SERVER_NAME replace "%%OBJECT_STORAGE_HOSTNAME%%" "$OBJECT_S
 docker-machine ssh $SERVER_NAME replace "%%OBJECT_STORAGE_CONSOLE_HOSTNAME%%" "$OBJECT_STORAGE_CONSOLE_HOSTNAME" /srv/nginx_gateway/nginx.conf
 docker-machine ssh $SERVER_NAME replace "%%ARTIFACTS_HOSTNAME%%" "$ARTIFACTS_HOSTNAME" /srv/nginx_gateway/nginx.conf
 docker-machine ssh $SERVER_NAME replace "%%KEEWEB_WEB_DAV_HOSTNAME%%" "$KEEWEB_WEB_DAV_HOSTNAME"  /srv/nginx_gateway/nginx.conf
+docker-machine ssh $SERVER_NAME replace "%%METRICS_HOSTNAME%%" "$METRICS_HOSTNAME"  /srv/nginx_gateway/nginx.conf
+docker-machine ssh $SERVER_NAME replace "%%INITIALIZER_HOSTNAME%%" "$INITIALIZER_HOSTNAME"  /srv/nginx_gateway/nginx.conf
 
 # Discourse
 docker-machine ssh $SERVER_NAME mkdir -p /srv/hub_origin

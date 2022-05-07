@@ -9,6 +9,10 @@ htpasswd -b -c /srv/nginx_gateway/.pma "${PMA_HTTP_USER}" "${PMA_HTTP_PASSWORD}"
 # Keeweb guard password
 htpasswd -b -c /srv/nginx_gateway/.keeweb "${KEEWEB_HTTP_USER}" "${KEEWEB_HTTP_PASSWORD}"
 
+# Metrics guard password
+htpasswd -b -c /srv/nginx_gateway/.metrics "${METRICS_HTTP_USER}" "${METRICS_HTTP_PASSWORD}"
+
+
 #Certbot
 docker stop certbot || true
 docker rm certbot || true
@@ -53,7 +57,7 @@ if [ "$SKIP_CERTS" != "1" ];
 then
     sleep 10
     docker start certbot
-    docker exec -e "DOMAINS=${SSL_ROOT},${HUB_HOSTNAME},${STORE_HOSTNAME},${PMA_HOSTNAME},${KEEWEB_HOSTNAME},${OBJECT_STORAGE_HOSTNAME},${ARTIFACTS_HOSTNAME},${KEEWEB_WEB_DAV_HOSTNAME},${OBJECT_STORAGE_CONSOLE_HOSTNAME}"  certbot sh /run.sh new
+    docker exec -e "DOMAINS=${SSL_ROOT},${HUB_HOSTNAME},${STORE_HOSTNAME},${PMA_HOSTNAME},${KEEWEB_HOSTNAME},${OBJECT_STORAGE_HOSTNAME},${ARTIFACTS_HOSTNAME},${KEEWEB_WEB_DAV_HOSTNAME},${OBJECT_STORAGE_CONSOLE_HOSTNAME},${METRICS_HOSTNAME},${INITIALIZER_HOSTNAME}"  certbot sh /run.sh new
     docker stop certbot
 fi
 docker restart nginx_gateway

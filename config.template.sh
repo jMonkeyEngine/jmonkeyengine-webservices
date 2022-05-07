@@ -85,3 +85,12 @@ export GDRIVE_BACKUP_FOLDER_ID=""
 export GDRIVE_BACKUP_TOKEN = ''
 export GDRIVE_BACKUP_CLIENT_ID = ''
 export GDRIVE_BACKUP_CLIENT_SECRET = ''
+
+# Metrics
+export METRICS_HTTP_USER="metrics"
+export METRICS_HTTP_PASSWORD=""
+export METRICS_HOSTNAME='metrics.jmonkeyengine.org'
+
+
+# JME INITIALIZER
+export INITIALIZER_HOSTNAME="start.jmonkeyengine.org"
