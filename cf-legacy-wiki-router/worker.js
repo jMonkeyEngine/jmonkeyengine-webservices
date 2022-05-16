@@ -32,10 +32,12 @@ addEventListener("fetch", (event) => {
     pathname=pathname.substring("/legacy".length);
   
     if(pathname.startsWith("/doku.php/")){ // route 1
-      let docpath=pathname.split("/doku.php/")[1];
-      docpath=docpath.split(":").join("/");
-      docpath=oldWikiBasePath+"/"+docpath+".html";
-      return Response.redirect(newWikiUrl+docpath, 301);
+        //let docpath=pathname.split("/doku.php/")[1];
+        //docpath=docpath.split(":").join("/");
+        //docpath=oldWikiBasePath+"/"+docpath+".html";
+        //return Response.redirect(newWikiUrl+docpath, 301);
+        let archivedUrl="https://web.archive.org/web/http://hub.jmonkeyengine.org/wiki/"+pathname;
+        return Response.redirect(archivedUrl, 301);
     }else{ // route 2
       let docpath=pathname;
       if(!docpath.startsWith(oldWikiBasePath)){
